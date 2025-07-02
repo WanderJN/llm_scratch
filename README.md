@@ -1,5 +1,6 @@
 # 大模型基本功
 ## 手撕Transformer模型(transformer_model)
+参考链接：https://www.bilibili.com/video/BV1nyyoYLEyL/<br>
 ![transformer](https://github.com/user-attachments/assets/a3464fe1-3046-44f0-86c6-7ba4bac295a9)
 
 ## 手撕GRPO训练器(grpo_trainer_scratch)
