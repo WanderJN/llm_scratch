@@ -3,6 +3,7 @@
 ![transformer](https://github.com/user-attachments/assets/a3464fe1-3046-44f0-86c6-7ba4bac295a9)
 
 ## 手撕GRPO训练器(grpo_trainer_scratch)
+### GRPO原理
 ![grpo_figure](https://github.com/user-attachments/assets/65b9c9d4-c495-40e3-b93e-ab89e2878dae)<br>
 对于每个问题 i，GRPO 从旧策略 πθold​​ 中采样一组输出 {i1​,i2​,…,iA​}，然后通过最大化以下目标函数来优化策略模型：<br>
 ![image](https://github.com/user-attachments/assets/bf53f901-9a9a-44a7-afa2-f412c442fc34)<br>
@@ -11,5 +12,5 @@
 ![image](https://github.com/user-attachments/assets/7b112f8f-72dc-4a78-b23c-27412fceddb5)<br>
 该值一定为正。<br>
 <br>
-流程图像示意：<br>
+### 流程图像示意
 ![grpo](https://github.com/user-attachments/assets/6b5c6713-e92f-4c36-bf59-93979f54e19c)
