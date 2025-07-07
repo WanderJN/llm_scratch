@@ -5,7 +5,8 @@
 
 ## 手撕PPO训练器(ppo_trainer_scratch)
 ### RLHF-PPO完整流程
-![RLHF-PPO](https://github.com/user-attachments/assets/c3f21b6c-9a89-4cb4-8589-fc677afe2633)<br>
+![RLHF-PPO](https://github.com/user-attachments/assets/c3f21b6c-9a89-4cb4-8589-fc677afe2633)
+<img src="https://github.com/user-attachments/assets/c3f21b6c-9a89-4cb4-8589-fc677afe2633" width="70%"/><br>
 ![PPO](https://github.com/user-attachments/assets/16a95022-9811-4570-ac1a-390ba703814e)<br>
 ### PPO原理
 PPO 的目标是通过最大化以下替代目标函数来优化策略模型：
