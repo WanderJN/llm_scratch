@@ -1,7 +1,7 @@
 # 大模型基本功
 ## 手撕Transformer模型(transformer_model)
 参考链接：https://www.bilibili.com/video/BV1nyyoYLEyL/<br>
-<img src="https://github.com/user-attachments/assets/a3464fe1-3046-44f0-86c6-7ba4bac295a9" width="70%"/><br>
+<img src="https://github.com/user-attachments/assets/a3464fe1-3046-44f0-86c6-7ba4bac295a9" width="50%"/><br>
 
 ## 手撕PPO训练器(ppo_trainer_scratch)
 ### RLHF-PPO完整流程
