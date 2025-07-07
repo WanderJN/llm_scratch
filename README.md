@@ -17,12 +17,12 @@ PPO 的目标是通过最大化以下替代目标函数来优化策略模型：
 给定价值函数V和奖励函数R，At使用广义优势估计(GAE)计算：<br>
 ![image](https://github.com/user-attachments/assets/79a72031-278b-4d0f-a65b-2efbd7b65e62)<br>
 ![image](https://github.com/user-attachments/assets/b4203cc6-2b3d-495a-a13f-c114aab42778)<br>
-PPO存在的问题：PPO 中的值函数通常是一个与策略模型大小相当的模型，这带来了显著的内存和计算负担。此外，在 LLMs 的上下文中，值函数在训练过程中被用作优势计算中的Baseline，但通常只有最后一个 token 会被奖励模型赋予奖励分数，这可能使得值函数的训练变得复杂。<br>
+**PPO存在的问题**：PPO 中的值函数通常是一个与策略模型大小相当的模型，这带来了显著的内存和计算负担。此外，在 LLMs 的上下文中，值函数在训练过程中被用作优势计算中的Baseline，但通常只有最后一个 token 会被奖励模型赋予奖励分数，这可能使得值函数的训练变得复杂。<br>
 
 ## 手撕GRPO训练器(grpo_trainer_scratch)
 ### GRPO原理
 ![grpo_figure](https://github.com/user-attachments/assets/65b9c9d4-c495-40e3-b93e-ab89e2878dae)<br>
-与PPO相比，GRPO消除了价值函数，并以组相对的方式估计优势。对于特定的问题-答案对(q, a)，行为策略 πθ_old​​ 会抽样一组G个单独的回答o_i{i=1~G}。然后，第i个回答的优势通过归一化组维度的奖励Ri{i=1~G}来计算：<br>
+与PPO相比，GRPO消除了价值函数，并以组相对的方式估计优势。对于特定的问题-答案对(q, a)，行为策略 πθ_old​​ 会抽样一组G个单独的回答o_i{i=1到G}。然后，第i个回答的优势通过归一化组维度的奖励Ri{i=1到G}来计算：<br>
 ![image](https://github.com/user-attachments/assets/7c6dcc52-9c1c-4f85-a8e4-b6f97b80a9b6)<br>
 对于每个问题 i，GRPO 从旧策略 πθold​​ 中采样一组输出 {i1​,i2​,…,iA​}，然后通过最大化以下目标函数来优化策略模型：<br>
 ![image](https://github.com/user-attachments/assets/bf53f901-9a9a-44a7-afa2-f412c442fc34)<br>
