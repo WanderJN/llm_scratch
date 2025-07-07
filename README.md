@@ -11,10 +11,10 @@
 PPO 的目标是通过最大化以下替代目标函数来优化策略模型：
 ![image](https://github.com/user-attachments/assets/0717554c-00f5-4a78-b1eb-21f838377628)<br>
 其中，πθ​ 和 πθ_old​​ 分别是当前策略模型和旧策略模型，q 和 o 是从问题数据集和旧策略 πθ_old​​ 中采样的问题和输出。超参数 ϵ 用于稳定训练过程。优势 A_i​ 是通过广义优势估计（GAE）计算的，计算过程基于奖励 {ri≥j​} 和学习到的值函数 Vπold​​。为了减轻对奖励模型的过度优化，标准方法是在每个标记的奖励中添加一个来自参考模型的每个标记的KL惩罚，即：<br>
-![image](https://github.com/user-attachments/assets/8a95fa10-41e7-4f16-909f-37ca75266514)<br>
+![image](https://github.com/user-attachments/assets/b4f6e67d-7c30-4d00-a9ee-30baf2d6cd7e)<br>
 
 其中，r是奖励模型，π_ref是参考模型，通常是初始的监督微调（SFT）模型，而 β 是 KL 惩罚项的系数。<br>
-给定价值函数V和奖励函数R，\(\hat{A}_t\)使用广义优势估计(GAE)计算：<br>
+给定价值函数V和奖励函数R，At使用广义优势估计(GAE)计算：<br>
 ![image](https://github.com/user-attachments/assets/79a72031-278b-4d0f-a65b-2efbd7b65e62)<br>
 ![image](https://github.com/user-attachments/assets/b4203cc6-2b3d-495a-a13f-c114aab42778)<br>
 PPO存在的问题：PPO 中的值函数通常是一个与策略模型大小相当的模型，这带来了显著的内存和计算负担。此外，在 LLMs 的上下文中，值函数在训练过程中被用作优势计算中的Baseline，但通常只有最后一个 token 会被奖励模型赋予奖励分数，这可能使得值函数的训练变得复杂。<br>
@@ -22,7 +22,7 @@ PPO存在的问题：PPO 中的值函数通常是一个与策略模型大小相�
 ## 手撕GRPO训练器(grpo_trainer_scratch)
 ### GRPO原理
 ![grpo_figure](https://github.com/user-attachments/assets/65b9c9d4-c495-40e3-b93e-ab89e2878dae)<br>
-与PPO相比，GRPO消除了价值函数，并以组相对的方式估计优势。对于特定的问题-答案对(q, a)，行为策略\(\pi_{\theta_{old}}\)会抽样一组G个单独的回答\({o_i}_{i=1}^G\)。然后，第i个回答的优势通过归一化组维度的奖励\({R_i}_{i=1}^G\)来计算：<br>
+与PPO相比，GRPO消除了价值函数，并以组相对的方式估计优势。对于特定的问题-答案对(q, a)，行为策略 πθ_old​​ 会抽样一组G个单独的回答o_i{i=1~G}。然后，第i个回答的优势通过归一化组维度的奖励Ri{i=1~G}来计算：<br>
 ![image](https://github.com/user-attachments/assets/7c6dcc52-9c1c-4f85-a8e4-b6f97b80a9b6)<br>
 对于每个问题 i，GRPO 从旧策略 πθold​​ 中采样一组输出 {i1​,i2​,…,iA​}，然后通过最大化以下目标函数来优化策略模型：<br>
 ![image](https://github.com/user-attachments/assets/bf53f901-9a9a-44a7-afa2-f412c442fc34)<br>
