@@ -13,7 +13,7 @@ DPO是一种直接优化人类偏好的方法，主要用于语言模型对齐�
 2. 使用Bradley-Terry模型建模偏好概率<br>
 3. 直接优化策略模型，使其输出偏好回答的概率更高<br>
 ![image](https://github.com/user-attachments/assets/68a1ac6f-a661-43ba-ab4b-4b615205cbbe)<br>
-loss = -log σ(β * (log π(chosen)/π_ref(chosen) - log π(rejected)/π_ref(rejected)))<br>
+`loss = -log σ(β * (log π(chosen)/π_ref(chosen) - log π(rejected)/π_ref(rejected)))`<br>
 相较于PPO，DPO在训练过程中是一种单阶段直接优化的方式，其本质和SFT监督微调一致，只是将Loss计算修改为了与chosen、rejected输出概率累计的。其训练流程简单，稳定性好，但模型训练上限不如PPO。<br>
 
 ## 手撕PPO训练器(ppo_trainer_scratch)
