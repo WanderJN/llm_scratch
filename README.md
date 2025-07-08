@@ -48,8 +48,11 @@ PPO 的目标是通过最大化以下替代目标函数来优化策略模型：
 ![grpo](https://github.com/user-attachments/assets/6b5c6713-e92f-4c36-bf59-93979f54e19c)
 ### GRPO训练时Loss从0开始并且上升
 参考链接：https://github.com/huggingface/open-r1/issues/239<br>
-默认是新旧策略的概率值per_token_logps是一样的，`torch.exp(per_token_logps - per_token_logps.detach())`一直为1，但是仍然存在梯度。<br>
+**解释1：TRL库的Loss计算原因**
+在TRL库中，默认是新旧策略的概率值per_token_logps是一样的，`torch.exp(per_token_logps - per_token_logps.detach())`一直为1，但是仍然存在梯度。参考解释如下图：<br>
 ![image](https://github.com/user-attachments/assets/bdae05be-0768-4efc-bc3e-a62f952123ce)<br>
+**为什么可以这样做**：因为在deepseek-math的论文中提到：“The policy model only has a single update following each exploration stage."，他只采样了一次。所以，就直接这么写了。
+**解释2：GRPO默认策略是单步更新**
 现在GRPO实现中策略都是单步更新，导致新旧策略是一样的，所以重要性采样系数是1，然后优势函数A是一个组当中每个reward的标准化，那么对优势函数A求期望自然也就是0了。所以GRPO的loss实际上就是新旧策略的KL散度项再乘一个系数beta，这也就是为什么训练过程中loss曲线和KL散度曲线分布如此相似，因为只差了一个系数beta。具体推导原因如下图所示：<br>
 ![image](https://github.com/user-attachments/assets/94d4d1e1-c2e0-474c-8e53-3c4058f88ee2)
 ![image](https://github.com/user-attachments/assets/4cd494fe-8c3c-4e78-94c2-b6d868c67de9)
