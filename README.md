@@ -6,14 +6,14 @@
 ## 手撕DPO训练器(dpo_trainer_scratch)
 ### DPO原理
 学习参考：https://zhuanlan.zhihu.com/p/1888312479307772555<br>
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/344c9cdf-1160-43ac-be3c-a111e49bbf8f)<br>
 DPO是一种直接优化人类偏好的方法，主要用于语言模型对齐：直接从偏好数据（chosen、rejected数据对）中学习，无需显式的奖励模型。通过对比学习的方式，让模型更倾向于生成人类偏好的回答
 工作流程：<br>
 1. 收集偏好数据对 (preferred, rejected)<br>
 2. 使用Bradley-Terry模型建模偏好概率<br>
 3. 直接优化策略模型，使其输出偏好回答的概率更高<br>
 loss = -log σ(β * (log π(chosen)/π_ref(chosen) - log π(rejected)/π_ref(rejected)))<br>
-![alt text](image-1.png)
+![image](https://github.com/user-attachments/assets/68a1ac6f-a661-43ba-ab4b-4b615205cbbe)<br>
 相较于PPO，DPO在训练过程中是一种单阶段直接优化的方式，其本质和SFT监督微调一致，只是将Loss计算修改为了与chosen、rejected输出概率累计的。其训练流程简单，稳定性好，但模型训练上限不如PPO。<br>
 
 ## 手撕PPO训练器(ppo_trainer_scratch)
