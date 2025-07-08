@@ -3,6 +3,19 @@
 参考链接：https://www.bilibili.com/video/BV1nyyoYLEyL/<br>
 <img src="https://github.com/user-attachments/assets/a3464fe1-3046-44f0-86c6-7ba4bac295a9" width="40%"/><br>
 
+## 手撕DPO训练器(dpo_trainer_scratch)
+### DPO原理
+学习参考：https://zhuanlan.zhihu.com/p/1888312479307772555<br>
+![alt text](image.png)
+DPO是一种直接优化人类偏好的方法，主要用于语言模型对齐：直接从偏好数据（chosen、rejected数据对）中学习，无需显式的奖励模型。通过对比学习的方式，让模型更倾向于生成人类偏好的回答
+工作流程：<br>
+1. 收集偏好数据对 (preferred, rejected)<br>
+2. 使用Bradley-Terry模型建模偏好概率<br>
+3. 直接优化策略模型，使其输出偏好回答的概率更高<br>
+loss = -log σ(β * (log π(chosen)/π_ref(chosen) - log π(rejected)/π_ref(rejected)))<br>
+![alt text](image-1.png)
+相较于PPO，DPO在训练过程中是一种单阶段直接优化的方式，其本质和SFT监督微调一致，只是将Loss计算修改为了与chosen、rejected输出概率累计的。其训练流程简单，稳定性好，但模型训练上限不如PPO。<br>
+
 ## 手撕PPO训练器(ppo_trainer_scratch)
 ### RLHF-PPO完整流程
 <img src="https://github.com/user-attachments/assets/c3f21b6c-9a89-4cb4-8589-fc677afe2633" width="70%"/><br>
@@ -31,5 +44,5 @@ PPO 的目标是通过最大化以下替代目标函数来优化策略模型：
 ![image](https://github.com/user-attachments/assets/7b112f8f-72dc-4a78-b23c-27412fceddb5)<br>
 该值一定为正。<br>
 <br>
-### 流程图像示意
+### GRPO流程图像示意
 ![grpo](https://github.com/user-attachments/assets/6b5c6713-e92f-4c36-bf59-93979f54e19c)
